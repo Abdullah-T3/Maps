@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "52988407544",
+    "project_id": "auth-a9bad",
+    "storage_bucket": "auth-a9bad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52988407544:android:ee8e32078c63b6bd3e550d",
+        "android_client_info": {
+          "package_name": "com.example.maps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6JTlKRammckZa1CaWKYbIHdOqOdC6aq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
