@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:maps/Constans/Colors.dart';
 import 'package:provider/provider.dart';
 import '../Comonants/Custom_textFeild.dart';
 
@@ -57,7 +56,7 @@ class _SigninViewState extends State<SigninView> {
                 physics: const NeverScrollableScrollPhysics(),
                 child: Form(
                   key: formkey,
-                  child: Container(
+                  child: SizedBox(
                     height: deviceinfo.screenHeight,
                     width: deviceinfo.screenWidth,
                     child: Padding(
@@ -114,7 +113,7 @@ class _SigninViewState extends State<SigninView> {
                                 left: deviceinfo.localWidth * 0.1),
                             child: Image.asset("assets/images/desk.png"),
                           ),
-                          Container(
+                          SizedBox(
                             height: deviceinfo.localHeight * 0.07,
                             width: deviceinfo.localWidth * 0.8,
                             child: MaterialButton(
@@ -122,8 +121,12 @@ class _SigninViewState extends State<SigninView> {
 
                                 await authViewModel.signIn(emailcontroller.text,
                                     passwordcontroller.text);
+                                if(authViewModel.errorMessage == 'email is not verified'){
+                                  Navigator.pushReplacementNamed(context, verificationView, arguments: emailcontroller.text);
+
+                                }
                                 if(authViewModel.state == AuthState.loading){
-                                  CircularProgressIndicator();
+                                  const CircularProgressIndicator();
 
                                 }
                                 if (authViewModel.state == AuthState.success) {
@@ -160,13 +163,13 @@ class _SigninViewState extends State<SigninView> {
                               ),
                               IconButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SigninWithphonView()));
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             SigninWithphonView()));
                                   },
-                                  icon: Icon(Icons.phone_android,color: Colors.grey,))
+                                  icon: const Icon(Icons.phone_android,color: Colors.grey,))
                             ],
                           ),
                           Row(

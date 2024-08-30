@@ -18,7 +18,7 @@ class PhoneAuthViewModel with ChangeNotifier {
 
   // Update phone number in the model
   void updatePhoneNumber(String phoneNumber) {
-    _phoneAuthModel = _phoneAuthModel.copyWith(phoneNumber: "+2" + phoneNumber);
+    _phoneAuthModel = _phoneAuthModel.copyWith(phoneNumber: "+2$phoneNumber");
     notifyListeners();
   }
 
@@ -113,7 +113,7 @@ class PhoneAuthViewModel with ChangeNotifier {
   void _setLoading(bool value) {
     _isLoading = value;
     if(value) {
-      CircularProgressIndicator();
+      const CircularProgressIndicator();
     }
     notifyListeners();
   }

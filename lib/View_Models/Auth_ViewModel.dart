@@ -23,8 +23,18 @@ class AuthViewModel with ChangeNotifier {
         email: email,
         password: password,
       );
-      _user = UserModel.fromFirebaseUser(result.user!);
-      _state = AuthState.success;
+
+      if (result.user != null) {
+        // Check if email is verified
+        if (!result.user!.emailVerified) {
+          _state = AuthState.error;
+          _errorMessage = 'Email not verified. Please verify your email.';
+          await signOut(); // Sign out if email is not verified
+        } else {
+          _user = UserModel.fromFirebaseUser(result.user!);
+          _state = AuthState.success;
+        }
+      }
     } catch (e) {
       _state = AuthState.error;
       _errorMessage = 'Sign in failed: $e';
@@ -49,16 +59,28 @@ class AuthViewModel with ChangeNotifier {
         email: email,
         password: password,
       );
-      result.user?.updateDisplayName(
+      await result.user?.updateDisplayName(
         email.substring(0, email.indexOf('@')),
       );
-      _user = UserModel.fromFirebaseUser(result.user!);
-      _state = AuthState.success;
+
+      // Send verification email
+      await result.user?.sendEmailVerification();
+      try{
+        _user = UserModel.fromFirebaseUser(result.user!);
+        _state = AuthState.success;
+      } catch (e) {
+        _state = AuthState.error;
+        _errorMessage = "email is not verified";
+      }
+      notifyListeners();
+
     } catch (e) {
       _state = AuthState.error;
-      _errorMessage = 'Sign up failed: $e';
+      _errorMessage = e.toString();
     }
     notifyListeners();
+
+
   }
 
   // Method to sign out
@@ -71,7 +93,7 @@ class AuthViewModel with ChangeNotifier {
       _state = AuthState.success;
     } catch (e) {
       _state = AuthState.error;
-      _errorMessage = 'Sign out failed: $e';
+      _errorMessage =  e.toString();
     }
     notifyListeners();
   }

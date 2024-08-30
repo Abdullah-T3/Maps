@@ -1,6 +1,6 @@
 
-  const String signInRoute = '/';
+  const String signInRoute = '/signin';
   const String signUpRoute = '/signup';
   const String signInRouteWithPhone = '/signinwithphone';
-  const String otbView = '/otbview';
+  const String verificationView = '/VerificationView';
   const String homeRoute = '/home';

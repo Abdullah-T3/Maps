@@ -3,9 +3,10 @@ import 'package:provider/provider.dart';
 
 import '../Constans/Strings.dart';
 import '../View_Models/Auth_ViewModel.dart';
-import 'SignIn_View.dart';
 
 class HomepageView extends StatelessWidget {
+  const HomepageView({super.key});
+
   @override
 
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class HomepageView extends StatelessWidget {
           if(authViewModel.state == AuthState.success){
             Navigator.pushReplacementNamed(context, signInRoute);
           }else if(authViewModel.state == AuthState.loading){
-            CircularProgressIndicator();
+            const CircularProgressIndicator();
           }
 
         },

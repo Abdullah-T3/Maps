@@ -1,18 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../Constans/Colors.dart';
-import '../Constans/Strings.dart';
 import '../Responsive/UiComponanets/InfoWidget.dart';
 import '../Comonants/Custom_textFeild.dart';
 import '../Responsive/models/DeviceInfo.dart';
 import '../View_Models/PhoneAuth_ViewModel.dart';
-import 'otp_View.dart';
+import 'Verfcation_View.dart';
 
 class SigninWithphonView extends StatelessWidget {
   // Removed late keyword and use a controller instead
   final TextEditingController phoneController = TextEditingController();
+
+  SigninWithphonView({super.key});
 
   Widget buildTopText() {
     return const Column(children: [
@@ -45,7 +45,7 @@ class SigninWithphonView extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  generateRandomFlag() + '+20',
+                  '${generateRandomFlag()}+20',
                   style: const TextStyle(letterSpacing: 2, fontSize: 24),
                 ),
               ),
@@ -58,7 +58,7 @@ class SigninWithphonView extends StatelessWidget {
           child: Container(
             width: double.infinity,
             height: 50,
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: CustomTextfeild(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -112,7 +112,7 @@ class SigninWithphonView extends StatelessWidget {
               child: Center(
                 child: Container(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
                         buildTopText(),
@@ -142,8 +142,7 @@ class SigninWithphonView extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => OtpView(
-                                          email: "+2"+phoneNumber,
+                                        builder: (context) => VerificationView(
                                         ),
                                       ),
                                     );

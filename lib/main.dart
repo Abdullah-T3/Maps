@@ -4,12 +4,11 @@ import 'package:provider/provider.dart';
 import 'Constans/Strings.dart';
 import 'View_Models/Auth_ViewModel.dart';
 import 'View_Models/PhoneAuth_ViewModel.dart';
-import 'View_Models/SignUp_ViewModel.dart';
 import 'Views/SignIn_View.dart';
 import 'Views/SignIn_withPhon_View.dart';
 import 'Views/SignUp_View.dart';
+import 'Views/Verfcation_View.dart';
 import 'Views/homePage_View.dart';
-import 'Views/otp_View.dart';
 
 
 void main() async{
@@ -19,24 +18,26 @@ void main() async{
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => AuthViewModel()),
-          ChangeNotifierProvider(create: (_) => SignUpViewModel()),
           ChangeNotifierProvider(create: (_) => PhoneAuthViewModel()),
         ],
-     child: FlutterMaps(),)
+     child: const FlutterMaps(),)
   );
 }
 
 class FlutterMaps extends StatelessWidget {
+  const FlutterMaps({super.key});
+
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: authViewModel.user != null ? homeRoute : signInRoute,
+      initialRoute:  signInRoute ,
       routes: {
+        verificationView: (context) =>  VerificationView(),
         signInRoute: (context) => const SigninView(),
-        signUpRoute: (context) => SignUpScreen(),
-        homeRoute: (context) => HomepageView(),
+        signUpRoute: (context) => const SignUpScreen(),
+        homeRoute: (context) => const HomepageView(),
         signInRouteWithPhone: (context) => SigninWithphonView(),
       },
     );

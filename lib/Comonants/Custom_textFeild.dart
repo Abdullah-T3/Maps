@@ -25,11 +25,11 @@ class CustomTextfeild extends StatelessWidget {
       keyboardType: keyboardType ,
       controller: controller, 
       obscureText: obscureText,
-      decoration: decoration != null ? decoration : InputDecoration(
+      decoration: decoration ?? InputDecoration(
         enabledBorder:  border,
         focusedBorder:  border,
         labelText: hint,
-        labelStyle:  TextStyle(color: Colors.grey),
+        labelStyle:  const TextStyle(color: Colors.grey),
         prefixIcon: Icon(icon),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

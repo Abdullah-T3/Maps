@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:maps/Responsive/UiComponanets/InfoWidget.dart';
 import 'package:provider/provider.dart';
@@ -5,9 +6,11 @@ import '../Comonants/Custom_textFeild.dart';
 import '../Constans/Strings.dart';
 import '../Model/SignUp_Model.dart';
 import '../Responsive/models/DeviceInfo.dart';
-import '../View_Models/SignUp_ViewModel.dart';
+import '../View_Models/Auth_ViewModel.dart';
 
 class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
@@ -34,7 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final signUpViewModel = Provider.of<SignUpViewModel>(context);
+    final authViewModel = Provider.of<AuthViewModel>(context);
 
     return Infowidget(builder: (BuildContext context, Deviceinfo deviceinfo) {
       return Scaffold(
@@ -59,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator:(value) {
+                    validator: (value) {
                       if (value!.isEmpty) {
                         return "Please enter your email";
                       }
@@ -73,18 +76,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     controller: emailController,
                     decoration: InputDecoration(
-                        labelText: "Email",
-                        labelStyle: const TextStyle(color: Colors.grey),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10),
-                        ),),
+                      labelText: "Email",
+                      labelStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(
+                            deviceinfo.screenWidth * 0.05),
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   CustomTextfeild(
-                    validator:   (value) {
+                    validator: (value) {
                       if (value!.isEmpty) {
                         return "Please enter your password";
                       }
@@ -109,15 +114,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       labelText: "Password",
                       labelStyle: const TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(
+                            deviceinfo.screenWidth * 0.05),
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: deviceinfo.screenHeight * 0.02,
                   ),
                   CustomTextfeild(
-                    validator:   (value) {
+                    validator: (value) {
                       if (value!.isEmpty) {
                         return "Please enter your password";
                       }
@@ -139,10 +145,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ? const Icon(Icons.visibility_off)
                             : const Icon(Icons.remove_red_eye),
                       ),
-                      labelText: "Password",
+                      labelText: "Confirm Password",
                       labelStyle: const TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(
+                            deviceinfo.screenWidth * 0.05),
                       ),
                     ),
                   ),
@@ -159,24 +166,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       child: MaterialButton(
                         onPressed: () async {
-                          final signUpModel = SignUpModel(
-                            email: emailController.text,
-                            password: passwordController.text,
-                            confirmPassword: confirmPasswordController.text,
-                          );
-
                           try {
-                            await signUpViewModel.signUp(signUpModel);
-                            if (signUpModel.isValid()) {
-                              Navigator.pushNamed(context, otbView);
+                            await authViewModel.signUp(
+                                emailController.text,
+                                passwordController.text,
+                                confirmPasswordController.text);
+                            if (authViewModel.state == AuthState.loading) {
+                              const CircularProgressIndicator();
                             }
-                            else {
-                              // Handle sign-up errors
-                              print("Invalid sign-up data");
+                            if (authViewModel.state == AuthState.success) {
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  homeRoute, (Route<dynamic> route) => true);
+
+                            }
+                          } catch (e) {
+                            if (e is FirebaseAuthException) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(authViewModel.errorMessage!)
+                                  ));
+
                             }
 
-                          } catch (e) {
-                            // Handle sign-up errors
+                            print(e);
                           }
                         },
                         child: Text(
