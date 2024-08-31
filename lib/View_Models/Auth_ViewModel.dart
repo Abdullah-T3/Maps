@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import '../Model/User_Model.dart';
 
 enum AuthState { idle, loading, success, error }

@@ -25,7 +25,7 @@ class VerificationView extends StatelessWidget {
           SizedBox(height: deviceInfo.screenHeight * 0.01),
           RichText(
             text: TextSpan(
-              text: "Enter yor Email to send verification mail to ",
+              text: "Enter yor Email to send verification mail to your account ",
               style: TextStyle(
                   fontSize: deviceInfo.screenWidth * 0.03, color: Colors.black),
               children: [

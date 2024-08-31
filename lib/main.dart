@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'Constans/Strings.dart';
 import 'View_Models/Auth_ViewModel.dart';
 import 'View_Models/PhoneAuth_ViewModel.dart';
+import 'Views/SearchHistory_View.dart';
 import 'Views/SignIn_View.dart';
 import 'Views/SignIn_withPhon_View.dart';
 import 'Views/SignUp_View.dart';
@@ -32,13 +34,14 @@ class FlutterMaps extends StatelessWidget {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute:  signInRoute ,
+      initialRoute: signInRoute ,
       routes: {
         verificationView: (context) =>  VerificationView(),
         signInRoute: (context) => const SigninView(),
         signUpRoute: (context) => const SignUpScreen(),
         homeRoute: (context) => const HomepageView(),
         signInRouteWithPhone: (context) => SigninWithphonView(),
+        markHistoryRoute : (context) =>  SearchHistoryView(),
       },
     );
   }

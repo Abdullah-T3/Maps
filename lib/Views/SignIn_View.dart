@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../Comonants/Custom_textFeild.dart';
 
+import '../Comonants/Custom_textFeild.dart';
+import '../Constans/Strings.dart';
 import '../Responsive/UiComponanets/InfoWidget.dart';
 import '../Responsive/models/DeviceInfo.dart';
-
-import '../Constans/Strings.dart';
 import '../View_Models/Auth_ViewModel.dart';
-import 'SignIn_withPhon_View.dart';
 
 class SigninView extends StatefulWidget {
   const SigninView({super.key});
@@ -17,7 +15,7 @@ class SigninView extends StatefulWidget {
 }
 
 class _SigninViewState extends State<SigninView> {
-  bool ispressed = false;
+  bool ispressed = true;
 
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();

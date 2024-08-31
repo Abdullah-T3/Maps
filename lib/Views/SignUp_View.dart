@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:maps/Responsive/UiComponanets/InfoWidget.dart';
+import '../Responsive/UiComponanets/InfoWidget.dart';
 import 'package:provider/provider.dart';
 import '../Comonants/Custom_textFeild.dart';
 import '../Constans/Strings.dart';
-import '../Model/SignUp_Model.dart';
 import '../Responsive/models/DeviceInfo.dart';
 import '../View_Models/Auth_ViewModel.dart';
 
@@ -165,7 +164,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             deviceinfo.screenWidth * 0.05),
                       ),
                       child: MaterialButton(
-                        onPressed: () async {
+                      onPressed: () async {
                           try {
                             await authViewModel.signUp(
                                 emailController.text,
