@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import '../Responsive/UiComponanets/InfoWidget.dart';
 import '../Responsive/models/DeviceInfo.dart';
 import '../View_Models/Auth_ViewModel.dart';
 
 
+// ignore: must_be_immutable
 class VerificationView extends StatelessWidget {
   late String email; // Receive phone number through constructor
 // OTP code entered by the user
   TextEditingController emailController = TextEditingController();
+
+  VerificationView({super.key});
 
   Widget buildIntroText() {
     return Infowidget(builder: (BuildContext context, Deviceinfo deviceInfo) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:maps/Views/SignIn_View.dart';
 import 'package:provider/provider.dart';
 import '../Constans/Strings.dart';
 import '../View_Models/Auth_ViewModel.dart';
@@ -13,7 +14,7 @@ class HomepageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => LocationViewModel(),
-      child:const MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: MapScreen(),
       ),
@@ -49,17 +50,17 @@ class _MapScreenState extends State<MapScreen> {
 
     // Get the current location marker
     final Marker? currentLocationMarker =
-    viewModel.locationState.currentLocation != null
-        ? Marker(
-      width: 60,
-      height: 60,
-      point: viewModel.locationState.currentLocation!,
-      child: const Icon(
-        Icons.location_on,
-        color: Colors.blue,
-      ),
-    )
-        : null;
+        viewModel.locationState.currentLocation != null
+            ? Marker(
+                width: 60,
+                height: 60,
+                point: viewModel.locationState.currentLocation!,
+                child: const Icon(
+                  Icons.location_on,
+                  color: Colors.blue,
+                ),
+              )
+            : null;
 
     return Scaffold(
       drawer: Drawer(
@@ -112,12 +113,8 @@ class _MapScreenState extends State<MapScreen> {
                 ),
                 child: MaterialButton(
                   onPressed: () {
-                    authViewModel.signOut();
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                          signInRoute, // Navigate to sign-in page
-                          (route) => false, // Remove all previous routes
-                    );
+                    // authViewModel.signOut();
+                    Navigator.pushNamedAndRemoveUntil(context,  signInRoute, (route) => false);
                   },
                   child: const Icon(Icons.exit_to_app),
                 ),
@@ -132,36 +129,36 @@ class _MapScreenState extends State<MapScreen> {
       body: viewModel.locationState.currentLocation == null
           ? const Center(child: CircularProgressIndicator())
           : FlutterMap(
-        mapController: _mapController,
-        options: MapOptions(
-          initialCenter: viewModel.locationState!.currentLocation!,
-          initialZoom: 14,
-          onTap: (tapPosition, point) => viewModel.addDestination(point),
-        ),
-        children: [
-          TileLayer(
-            urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-            subdomains: const ['a', 'b', 'c'],
-          ),
-          if (currentLocationMarker != null || lastMarker != null)
-            MarkerLayer(
-              markers: [
-                if (currentLocationMarker != null) currentLocationMarker,
-                if (lastMarker != null) lastMarker,
-              ], // Display current location marker and the last marker
-            ),
-          if (viewModel.locationState.routePoints.isNotEmpty)
-            PolylineLayer(
-              polylines: [
-                Polyline(
-                  points: viewModel.locationState.routePoints,
-                  strokeWidth: 4.0,
-                  color: Colors.blue,
+              mapController: _mapController,
+              options: MapOptions(
+                initialCenter: viewModel.locationState!.currentLocation!,
+                initialZoom: 14,
+                onTap: (tapPosition, point) => viewModel.addDestination(point),
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                  subdomains: const ['a', 'b', 'c'],
                 ),
+                if (currentLocationMarker != null || lastMarker != null)
+                  MarkerLayer(
+                    markers: [
+                      if (currentLocationMarker != null) currentLocationMarker,
+                      if (lastMarker != null) lastMarker,
+                    ], // Display current location marker and the last marker
+                  ),
+                if (viewModel.locationState.routePoints.isNotEmpty)
+                  PolylineLayer(
+                    polylines: [
+                      Polyline(
+                        points: viewModel.locationState.routePoints,
+                        strokeWidth: 4.0,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
               ],
             ),
-        ],
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (viewModel.locationState.currentLocation != null) {

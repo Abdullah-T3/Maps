@@ -105,6 +105,7 @@ class LocationViewModel extends ChangeNotifier {
   }
 
   void clearMarkers() {
+
     _locationState.clearMarkers();
     notifyListeners();
   }

@@ -1,4 +1,4 @@
-const String signInRoute = '/signin';
+const String signInRoute = '/';
 const String signUpRoute = '/signup';
 const String signInRouteWithPhone = '/signinwithphone';
 const String verificationView = '/VerificationView';

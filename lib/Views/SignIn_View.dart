@@ -119,13 +119,9 @@ class _SigninViewState extends State<SigninView> {
 
                                 await authViewModel.signIn(emailcontroller.text,
                                     passwordcontroller.text);
-                                if(authViewModel.errorMessage == 'email is not verified'){
-                                  Navigator.pushReplacementNamed(context, verificationView, arguments: emailcontroller.text);
 
-                                }
                                 if(authViewModel.state == AuthState.loading){
                                   const CircularProgressIndicator();
-
                                 }
                                 if (authViewModel.state == AuthState.success) {
                                   Navigator.pushReplacementNamed(

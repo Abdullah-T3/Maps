@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:maps/AppRoutes.dart';
 import 'package:provider/provider.dart';
 
 import 'Constans/Strings.dart';
@@ -22,27 +23,21 @@ void main() async{
           ChangeNotifierProvider(create: (_) => AuthViewModel()),
           ChangeNotifierProvider(create: (_) => PhoneAuthViewModel()),
         ],
-     child: const FlutterMaps(),)
+     child:  FlutterMaps( appRouter: Approutes(),),)
   );
 }
 
 class FlutterMaps extends StatelessWidget {
-  const FlutterMaps({super.key});
-
+   FlutterMaps({super.key, required this.appRouter});
+  final Approutes appRouter;
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: signInRoute ,
-      routes: {
-        verificationView: (context) =>  VerificationView(),
-        signInRoute: (context) => const SigninView(),
-        signUpRoute: (context) => const SignUpScreen(),
-        homeRoute: (context) => const HomepageView(),
-        signInRouteWithPhone: (context) => SigninWithphonView(),
-        markHistoryRoute : (context) =>  SearchHistoryView(),
-      },
+      onGenerateRoute: appRouter.onGenerateRoute,
+
     );
   }
 }
