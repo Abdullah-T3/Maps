@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maps/Views/Verfcation_View.dart';
 
-import 'Constans/Strings.dart';
+import 'Constants/Strings.dart';
 import 'Views/SearchHistory_View.dart';
 import 'Views/SignIn_View.dart';
 import 'Views/SignIn_withPhon_View.dart';

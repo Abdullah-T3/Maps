@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../Constans/Colors.dart';
+import '../Constants/Colors.dart';
 import '../Responsive/UiComponanets/InfoWidget.dart';
 import '../Comonants/Custom_textFeild.dart';
 import '../Responsive/models/DeviceInfo.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:maps/Views/SignIn_View.dart';
 import 'package:provider/provider.dart';
-import '../Constans/Strings.dart';
+import '../Constants/Strings.dart';
 import '../View_Models/Auth_ViewModel.dart';
 
 import '../View_Models/Lociton_ViewModel.dart';

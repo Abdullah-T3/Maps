@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../Comonants/Custom_textFeild.dart';
-import '../Constans/Strings.dart';
+import '../Constants/Strings.dart';
 import '../Responsive/UiComponanets/InfoWidget.dart';
 import '../Responsive/models/DeviceInfo.dart';
 import '../View_Models/Auth_ViewModel.dart';
