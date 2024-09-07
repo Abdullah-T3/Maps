@@ -30,7 +30,7 @@ class FlutterMaps extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: signInRoute ,
-      onGenerateRoute: appRouter.onGenerateRoute,
+      onGenerateRoute: Approutes().onGenerateRoute,
 
     );
   }

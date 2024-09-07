@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../View_Models/Lociton_ViewModel.dart';
 // todo search history
+// ignore: must_be_immutable
 class SearchHistoryView extends StatelessWidget {
    SearchHistoryView({super.key});
   late  List<Marker> markers ;

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:maps/Views/SignIn_View.dart';
+import 'package:maps/Widgets/My_Drawer.dart';
+import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 import 'package:provider/provider.dart';
-import '../Constants/Strings.dart';
+
 import '../View_Models/Auth_ViewModel.dart';
 
 import '../View_Models/Lociton_ViewModel.dart';
@@ -31,19 +32,16 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   late final MapController _mapController;
-
+ FloatingSearchBarController controller = FloatingSearchBarController();
   @override
   void initState() {
     super.initState();
     _mapController = MapController();
   }
-
-  @override
-  Widget build(BuildContext context) {
+ Widget buildMap( BuildContext context) {
     final viewModel = Provider.of<LocationViewModel>(context);
     final authViewModel = Provider.of<AuthViewModel>(context);
-
-    // Get the last marker from the list
+        // Get the last marker from the list
     final Marker? lastMarker = viewModel.locationState.markers.isNotEmpty
         ? viewModel.locationState.markers.last
         : null;
@@ -61,74 +59,7 @@ class _MapScreenState extends State<MapScreen> {
                 ),
               )
             : null;
-
-    return Scaffold(
-      drawer: Drawer(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 40, left: 10),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey[300],
-                ),
-                child: MaterialButton(
-                  onPressed: () {
-                    viewModel.clearMarkers();
-                    Navigator.of(context).pop(); // Close the drawer
-                  },
-                  child: const Text("Clear all markers"),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            // todo search history
-            // Padding(
-            //   padding: const EdgeInsets.only(bottom: 20, left: 10),
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(10),
-            //       color: Colors.grey[300],
-            //     ),
-            //     child: MaterialButton(
-            //       onPressed: () {
-            //         setState(() {
-            //           Navigator.pushNamed(context, markHistoryRoute);
-            //         });
-            //
-            //       },
-            //       child: Text("Hisotry"),
-            //     ),
-            //   ),
-            // ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20, left: 10),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey[300],
-                ),
-                child: MaterialButton(
-                  onPressed: () {
-                    // authViewModel.signOut();
-                    Navigator.pushNamedAndRemoveUntil(context,  signInRoute, (route) => false);
-                  },
-                  child: const Icon(Icons.exit_to_app),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      appBar: AppBar(
-        title: const Text("Flutter Map"),
-      ),
-      body: viewModel.locationState.currentLocation == null
-          ? const Center(child: CircularProgressIndicator())
-          : FlutterMap(
+   return FlutterMap(
               mapController: _mapController,
               options: MapOptions(
                 initialCenter: viewModel.locationState!.currentLocation!,
@@ -158,11 +89,84 @@ class _MapScreenState extends State<MapScreen> {
                     ],
                   ),
               ],
-            ),
+            );
+ }
+
+  Widget buildFloatingSearchBar() {
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    return FloatingSearchBar(
+       controller: controller,
+      elevation: 6,
+      hintStyle: TextStyle(fontSize: 18),
+      queryStyle: TextStyle(fontSize: 18),
+      hint: 'Find a place..',
+      border: BorderSide(style: BorderStyle.none),
+      margins: EdgeInsets.fromLTRB(20, 70, 20, 0),
+      padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
+      height: 52,
+      iconColor: Colors.blue,
+      scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
+      transitionDuration: const Duration(milliseconds: 600),
+      transitionCurve: Curves.easeInOut,
+      physics: const BouncingScrollPhysics(),
+      axisAlignment: isPortrait ? 0.0 : -1.0,
+      openAxisAlignment: 0.0,
+      width: isPortrait ? 600 : 500,
+      debounceDelay: const Duration(milliseconds: 500),
+      onQueryChanged: (query) {
+       
+      },
+      onFocusChanged: (_) {
+       
+      },
+      transition: CircularFloatingSearchBarTransition(),
+      actions: [
+        FloatingSearchBarAction(
+          showIfOpened: false,
+          child: CircularButton(
+            icon:  Icon(Icons.place, color: Colors.black.withOpacity(0.6)),
+            onPressed: () {
+              
+            },
+          ),
+        )
+      ],
+      builder: ( context, transition) { 
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+
+            ],
+          ),
+        );
+       }, );
+  }
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = Provider.of<LocationViewModel>(context);
+    final authViewModel = Provider.of<AuthViewModel>(context);
+
+    
+
+    return Scaffold(
+      drawer: MyDrawer(),
+
+      body : Stack(
+        children: [
+           viewModel.locationState.currentLocation == null
+          ? const Center(child: CircularProgressIndicator())
+          :buildMap(context),
+          buildFloatingSearchBar(),
+        ]
+      ),
+           
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (viewModel.locationState.currentLocation != null) {
-            _mapController.move(viewModel.locationState.currentLocation!, 14);
+            _mapController.move(viewModel.locationState.currentLocation!, 16);
           }
         },
         child: const Icon(Icons.my_location),
