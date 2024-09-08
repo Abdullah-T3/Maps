@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:maps/Constants/Strings.dart';
+
 import 'package:maps/View_Models/Auth_ViewModel.dart';
+import 'package:maps/Views/SignIn_View.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -131,7 +132,10 @@ class MyDrawer extends StatelessWidget {
           title: "Logout",
           onTap: ()async {
             await authViewModel.signOut();
-            Navigator.of(context).pushNamedAndRemoveUntil(signInRoute , (route) => false);
+           Navigator.push(context, new MaterialPageRoute(
+   builder: (context) => new SigninView())
+ );
+
           },
           color: Colors.red,
           triling: const SizedBox()

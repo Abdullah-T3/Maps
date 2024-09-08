@@ -16,14 +16,11 @@ class SigninView extends StatefulWidget {
 
 class _SigninViewState extends State<SigninView> {
   bool ispressed = true;
-
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
-
   final GlobalKey formkey = GlobalKey<FormState>();
-
   Widget buildIntroText() {
-    return const Column(
+    return  Column(
       children: [
         Text(
           "Welcome Back!",
@@ -116,7 +113,6 @@ class _SigninViewState extends State<SigninView> {
                             width: deviceinfo.localWidth * 0.8,
                             child: MaterialButton(
                               onPressed: () async {
-
                                 await authViewModel.signIn(emailcontroller.text,
                                     passwordcontroller.text);
 
